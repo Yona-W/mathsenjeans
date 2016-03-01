@@ -18,3 +18,5 @@ End game:
         - Move all stones individually 
         - Start by opening the stacks at the end of the play area and never give the opponent a stone (they'd gain 5 turns). Once they have no more stones, you win (because they have < 24 stones) 
 
+
+Test Arthur
