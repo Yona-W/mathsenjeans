@@ -4,6 +4,7 @@ import ai_functions as AI
 from copy import deepcopy
 from sys import argv
 import jsonpickle
+import random
 
 log = input("Do you want to log the replay? It will overwrite the previous one! [N]/Y ").lower() == "y"
 is_different_start_state = input("Do you want to input a different start state? [N]/Y ").lower() == "y"
@@ -39,10 +40,11 @@ while not game_over:
     played = False
     while not played:
         if player_1_turn:
-           player_selection = input("It's Player 1's turn! Pick a slot: ").lower()
+           player_selection = str(AI.do_turn(current_state))
         else:
-           player_selection = AI.do_turn(current_state)
+           player_selection = str(random.randint(1,7))
         if player_selection == "undo":
+           print(player_selection)
            num_turns = -int(input("By how many turns? "))
            play_history = play_history[:num_turns]
            current_state = current_turn + num_turns
@@ -51,7 +53,6 @@ while not game_over:
         slot_to_remove = get_slot(player_selection, player_1_turn)
         if slot_to_remove == -1:
             cls()
-            print("This is not a valid turn!")
             current_state.print_gameboard()
         else:
             next_state = play(current_state, slot_to_remove, player_1_turn)

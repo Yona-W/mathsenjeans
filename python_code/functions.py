@@ -56,9 +56,6 @@ def play(game_state, slot, player_1):
     game_state.is_player_1_turn = not player_1
     return game_state
 
-
-        
-
 def get_slot(letter, player_1):
     if player_1:
         if letter == "1":
