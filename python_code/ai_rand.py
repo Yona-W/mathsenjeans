@@ -37,6 +37,7 @@ while not game_over:
     if log: log_replay(play_history)
     current_state.print_gameboard()
     print()
+    input()
     played = False
     while not played:
         if player_1_turn:

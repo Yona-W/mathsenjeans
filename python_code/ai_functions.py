@@ -3,13 +3,12 @@ from copy import deepcopy
 
 def do_turn(game):
 	game_state = deepcopy(game)
-	import ipdb;ipdb.set_trace()
+	#import ipdb;ipdb.set_trace()
 	scores_per_move = [0, 0, 0, 0, 0, 0]
 	for turn in range(0, 6):
-		#input()
 		new_state = functions.play(game_state, turn, True)
 		if game.stones[turn] == 0:
-			import ipdb;ipdb.set_trace()
+			#import ipdb;ipdb.set_trace()
 			scores_per_move[turn] = -10000000.0
 			#print("skipping impossible turn")
 		else:
