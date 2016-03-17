@@ -39,9 +39,9 @@ while not game_over:
     played = False
     while not played:
         if player_1_turn:
-           player_selection = input("It's Player 1's turn! Pick a slot: ").lower()
+           player_selection = str(AI.do_turn(current_state))
         else:
-           player_selection = AI.do_turn(current_state)
+           player_selection = input("It's the human's turn! Pick a slot: ").lower()
         if player_selection == "undo":
            num_turns = -int(input("By how many turns? "))
            play_history = play_history[:num_turns]
