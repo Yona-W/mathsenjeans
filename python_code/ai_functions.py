@@ -1,7 +1,7 @@
 ﻿import functions
 from copy import deepcopy
 
-def do_turn(game):
+def do_turn(self, game, eval_functions):
 	game_state = deepcopy(game)
 	#import ipdb;ipdb.set_trace()
 	scores_per_move = [0, 0, 0, 0, 0, 0]
@@ -14,7 +14,7 @@ def do_turn(game):
 		else:
 			for function in eval_functions:
 				#print("Calling function",function)
-				scores_per_move[turn] += function(game_state, new_state, arthur_kms(new_state.stones))
+				scores_per_move[turn] += function(self, game_state, new_state, arthur_kms(new_state.stones))
 	#import ipdb;ipdb.set_trace()
 	best_score = max(scores_per_move)
 	print(best_score)
@@ -24,91 +24,6 @@ def do_turn(game):
 		if score == best_score:
 			print(i)
 			return i
-	
-
-def eval_is_largest_stack_increased(old_state, new_state, kms):
-    previous_largest_stack = max(old_state.stones[:6])
-    new_largest_stack = max(new_state.stones[:6])
-
-    if new_largest_stack > previous_largest_stack:
-        retval = (1.0 / arthur_g(kms)) * 5
-    else:
-        retval = 0
-
-    return retval
-
-def eval_amount_stones_lost(old_state, new_state, kms):
-    my_stones_before = sum(old_state.stones[:6])
-    my_stones_after = sum(new_state.stones[:6])
-
-    retval = (my_stones_after - my_stones_before) * ( -2 * arthur_h(kms))
-
-    return retval
-
-def eval_amount_bad_stacks_created(old_state, new_state, kms):
-    old_opportunities = 0
-    new_opportunities = 0
-
-    for slot in old_state.stones[:6]:
-        if 0 < slot < 3:
-            old_opportunities += 1
-
-    for slot in new_state.stones[:6]:
-        if 0 < slot < 3:
-            new_opportunities += 1
-
-    retval = (new_opportunities - old_opportunities) * (-0.5 * arthur_h(kms))
-
-    return retval
-
-
-def eval_amount_bad_opportunities_created(old_state, new_state, kms):
-    old_opportunities = 0
-    new_opportunities = 0
-
-    for slot in range(0,6):
-        if check_if_slot_capturable_by_enemy(old_state.stones, slot):
-            old_opportunities += 1
-
-    for slot in range(0,6):
-        if check_if_slot_capturable_by_enemy(new_state.stones, slot):
-            new_opportunities += 1
-
-    retval = (new_opportunities - old_opportunities) * (-1 * arthur_h(kms)) + 0.5 * kms
-
-    return retval
-
-def eval_is_enemy_forced_to_play_their_last_possible_move_and_thus_lose_the_game_in_a_sad_and_pathetic_way(old_state, new_state, kms):
-    enemy_slots = new_state.stones[6:]
-    enemy_filled_slots = len([val for val in enemy_slots if val != 0])
-
-    if enemy_filled_slots == 1 and enemy_slots[0] != 0:
-        return float("inf") #infinity motherfucker
-    if new_state.player_1_score >= 24:
-        return float("inf") #infinity motherfucker
-    return 0.0
-   
-
-def eval_did_i_open_my_biggest_slot(old_state, new_state, kms): #that's what she said huehuehue
-    #import ipdb;ipdb.set_trace()
-    my_old_slots = old_state.stones[:6]
-    my_new_slots = new_state.stones[:6]
-
-    if max(my_new_slots) < max(my_old_slots):
-        return -50.0 * arthur_j(kms) * arthur_k(my_new_slots)
-    return 0.0
-
-def eval_is_enemy_forced_to_open_their_largest_stack(old_state, new_state, kms):
-    enemy_slots = new_state.stones[6:]
-    enemy_filled_slots = len([val for val in enemy_slots if val != 0])
-
-    if enemy_filled_slots == 1:
-        return 50.0 * arthur_j(kms) * arthur_k(enemy_slots)
-    return 0.0
-
-def eval_stones_captured(old_state, new_state, kms):
-    score_difference = new_state.player_1_score - old_state.player_1_score
-    return 2 * score_difference * arthur_h(kms)
 
 def check_if_slot_capturable_by_enemy(board, slot):
     for enemy_slot in range(6, 12):
@@ -189,5 +104,3 @@ def arthur_n(x):
 
 def arthur_kms(board):
     return arthur_n(sum(board)) * arthur_m(max(board))
-
-eval_functions = [eval_is_largest_stack_increased, eval_amount_stones_lost, eval_amount_bad_stacks_created, eval_amount_bad_opportunities_created, eval_is_enemy_forced_to_play_their_last_possible_move_and_thus_lose_the_game_in_a_sad_and_pathetic_way, eval_did_i_open_my_biggest_slot, eval_is_enemy_forced_to_open_their_largest_stack, eval_stones_captured] # holy shit
