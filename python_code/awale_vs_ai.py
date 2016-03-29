@@ -4,6 +4,7 @@ from copy import deepcopy
 from sys import argv
 import jsonpickle
 from human import Human
+from random_player import Random
 from default_ai import Default_AI
 import game
 
@@ -29,6 +30,6 @@ if len(argv) > 1:
 		exit()
 
 player_1 = Default_AI()
-player_2 = Human(False)
+player_2 = Random()
 
-game.play_game(player_1, player_2, current_state, log)
+print(game.play_game(player_1, player_2, current_state, log))

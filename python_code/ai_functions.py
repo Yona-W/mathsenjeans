@@ -17,12 +17,12 @@ def do_turn(self, game, eval_functions):
 				scores_per_move[turn] += function(self, game_state, new_state, arthur_kms(new_state.stones))
 	#import ipdb;ipdb.set_trace()
 	best_score = max(scores_per_move)
-	print(best_score)
+	#print(best_score)
 	i = 0
 	for score in scores_per_move:
 		i += 1
 		if score == best_score:
-			print(i)
+			#print(i)
 			return i
 
 def check_if_slot_capturable_by_enemy(board, slot):

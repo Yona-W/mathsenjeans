@@ -4,7 +4,7 @@ from copy import deepcopy
 from sys import argv
 import jsonpickle
 
-def play_game(player1, player2, startstate, log):
+def play_game(player1, player2, startstate, log, print_screen = True):
 	current_state = deepcopy(startstate)
 	game_over = False
 	player_1_turn = True
@@ -14,8 +14,9 @@ def play_game(player1, player2, startstate, log):
 	
 	while not game_over:
 		if log: log_replay(play_history)
-		current_state.print_gameboard()
-		print()
+		if print_screen:
+			current_state.print_gameboard()
+			print()
 		played = False
 		while not played:
 			if player_1_turn:
@@ -32,12 +33,14 @@ def play_game(player1, player2, startstate, log):
 			if slot_to_remove == -1:
 				cls()
 				print("This is not a valid turn!")
-				current_state.print_gameboard()
+				if print_screen: current_state.print_gameboard()
 			else:
 				next_state = play(current_state, slot_to_remove, player_1_turn)
-				if next_state.is_state_legal():
+				if next_state.is_state_legal(player_1_turn):
 					played = True
 					play_history.append(deepcopy(current_state))
 					current_state = next_state
 					player_1_turn = not player_1_turn
-					cls()
+					if print_screen: cls()
+					if current_state.get_winning() > 0:
+						return (current_state.get_winning(), current_state)

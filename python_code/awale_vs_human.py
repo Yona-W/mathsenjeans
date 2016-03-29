@@ -30,4 +30,4 @@ if len(argv) > 1:
 player_1 = Human(True)
 player_2 = Human(False)
 
-game.play_game(player_1, player_2, current_state, log)
+print(game.play_game(player_1, player_2, current_state, log), "won the game")

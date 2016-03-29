@@ -15,8 +15,7 @@ class Game_State():
         this.stones = stones
         this.slot_moved = slot_moved
         this.is_player_1_turn = True
-
-
+        this.ignore_next_legal_check = False
 
     def print_gameboard(this):
         print()
@@ -55,17 +54,35 @@ class Game_State():
         
         print("╚════╩════╩════╩════╩════╩════╝")
 
-    def is_state_legal(this):
-        sum_p1 = 0
-        for i in range(0, 6):
-            sum_p1 += this.stones[i]
-        if sum_p1 == 0:
+    def is_state_legal(this, player_1_turn):
+        if this.ignore_next_legal_check:
+            this.ignore_next_legal_check = False
+            return True
+        
+        sum_p1 = sum(this.stones[:6])
+        if sum_p1 == 0 and not player_1_turn:
             return False
+        if sum_p1 == 0 and player_1_turn:
+            this.ignore_next_legal_check = True
 
-        sum_p2 = 0
-        for i in range(6, 12):
-            sum_p2 += this.stones[i]
-        if sum_p2 == 0:
+        sum_p2 = sum(this.stones[6:12])
+        if sum_p2 == 0 and player_1_turn:
             return False
+        if sum_p2 == 0 and not player_1_turn:
+            this.ignore_next_legal_check = True
 
         return True
+
+
+    def get_winning(this):
+        if this.player_1_score > 24:
+            return 1
+        if this.player_2_score > 24:
+            return 2
+            
+        if this.is_player_1_turn and sum(this.stones[:6]) == 0:
+            return 2
+        if not this.is_player_1_turn and sum(this.stones[6:12]) == 0:
+            return 1
+            
+        return 0
