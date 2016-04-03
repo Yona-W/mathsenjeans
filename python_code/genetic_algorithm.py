@@ -31,7 +31,7 @@ def test_individual(individual, threads, games, game_board = [4,4,4,4,4,4,4,4,4,
 		thread.start_new_thread(play_games.play, (individual, enemy, game_board, games_per_thread, all_games, player_1_win, player_2_win))
 	
 	while True:
-		if len(all_games) > threads * games_per_thread * 0.95:
+		if len(all_games) > threads * games_per_thread * 0.9:
 			break;
 		else:
 			print(int(float(len(all_games)) / float(threads * games_per_thread) * 100.0), "%", end="\r") #so ugly
