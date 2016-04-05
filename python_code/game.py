@@ -19,10 +19,11 @@ def play_game(player1, player2, startstate, log, print_screen = True):
 			print()
 		played = False
 		while not played:
+			#import ipdb;ipdb.set_trace()
 			if player_1_turn:
-				player_selection = player1.get_selection(current_state)
+				player_selection = player1.get_selection(deepcopy(current_state))
 			else:
-				player_selection = player2.get_selection(current_state)
+				player_selection = player2.get_selection(deepcopy(current_state))
 			if player_selection == "undo":
 				num_turns = -int(input("By how many turns? "))
 				play_history = play_history[:num_turns]
@@ -35,12 +36,36 @@ def play_game(player1, player2, startstate, log, print_screen = True):
 				print("This is not a valid turn!")
 				if print_screen: current_state.print_gameboard()
 			else:
-				next_state = play(current_state, slot_to_remove, player_1_turn)
-				if next_state.is_state_legal(player_1_turn):
+				next_state = play(deepcopy(current_state), slot_to_remove, player_1_turn)
+				if next_state == None:
+					if player_1_turn: print("error illegal state")
+					#return None
+					continue
+
+				legal_state = deepcopy(next_state).is_state_legal(player_1_turn)
+
+				#print (legal_state)
+
+				if not legal_state and player_1_turn:
+					import ipdb;ipdb.set_trace()
+
+				any_legal_states = False
+				for i in range(0, 6):
+					simulated_state = play(deepcopy(current_state), i, player_1_turn)
+					if simulated_state and simulated_state.is_state_legal(True):
+						any_legal_states = True
+#				print(any_legal_states)
+				if not any_legal_states or next_state.is_state_legal(player_1_turn):
+
+					if next_state.get_winning() > 0:
+						return (next_state.get_winning(), current_state)
+	
 					played = True
 					play_history.append(deepcopy(current_state))
 					current_state = next_state
 					player_1_turn = not player_1_turn
 					if print_screen: cls()
-					if current_state.get_winning() > 0:
-						return (current_state.get_winning(), current_state)
+				else:
+					if player_1_turn:
+						print("Error: illegal state")
+						print(jsonpickle.encode(current_state))

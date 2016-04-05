@@ -1,6 +1,7 @@
 import os
 import json, jsonpickle
-from gamestate import Game_State
+from copy import deepcopy
+from gamestate import *
 
 def log_replay(turn_history):
     encodeString = json.dumps(json.loads(jsonpickle.encode(turn_history)), indent=4) 
@@ -10,13 +11,15 @@ def log_replay(turn_history):
 def cls():
     os.system('cls' if os.name=='nt' else 'clear')
 
-def play(game_state, slot, player_1):
+def play(game_board_state, slot, player_1):
+
+    game_state = deepcopy(game_board_state)
 
     stones = game_state.stones
     num_stones = stones[slot]
 
     if num_stones == 0:
-        return Game_State(0, 0, [0,0,0,0,0,0,0,0,0,0,0,0], 0)
+        return None
 
     current_slot = (slot + 1) % 12
     capture_slot = (slot + num_stones + num_stones // 12) % 12

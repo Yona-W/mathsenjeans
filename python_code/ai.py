@@ -74,7 +74,7 @@ class AI:
 
 		retval = 0.0
 
-		if (enemy_filled_slots == 1 and enemy_slots[0] != 0) or new_state.player_1_score >= 24:
+		if (enemy_filled_slots == 1 and enemy_slots[5] != 0) or new_state.player_1_score >= 24:
 			retval = float("inf")
 
 		return retval
