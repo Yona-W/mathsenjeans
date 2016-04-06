@@ -1,4 +1,5 @@
 ﻿import functions
+import random
 from copy import deepcopy
 
 def do_turn(self, game, eval_functions, ignore_legality = False):
@@ -6,7 +7,7 @@ def do_turn(self, game, eval_functions, ignore_legality = False):
 	#import ipdb;ipdb.set_trace()
 	scores_per_move = [0, 0, 0, 0, 0, 0]
 	for turn in range(0, 6):
-		new_state = functions.play(deepcopy(game_state), turn, True)
+		new_state = functions.play(game_state, turn, True)
 		#print(new_state)
 		if not new_state: 
 			#print("skipping impossible turn")
@@ -25,8 +26,7 @@ def do_turn(self, game, eval_functions, ignore_legality = False):
 	#import ipdb;ipdb.set_trace()
 	best_score = max(scores_per_move)
 	if best_score == -10000000.0:
-		print("gangsta")
-		return do_turn(game, eval_functions, True)
+		return random.randint(1, 7)
 	#print(best_score)
 	i = 0
 	for score in scores_per_move:

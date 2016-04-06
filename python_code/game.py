@@ -8,23 +8,34 @@ import random
 def play_game(player1, player2, startstate, log, print_screen = True):
 	current_state = deepcopy(startstate)
 	game_over = False
-	player_1_turn = True
+	player_1_turn = startstate.is_player_1_turn
 	
 	play_history = []
 	current_turn = 0
-	current_loop = 0
 	
+	inner_loop = 0
+
 	while not game_over:
-		current_loop = current_loop + 1
-		print(current_loop)
-		if current_loop > 100:
+
+		inner_loop = inner_loop + 1
+		if inner_loop > 200:
+#			print("Game was stuck; I cancelled it")
 			return (random.randint(1,2), current_state)
 		if log: log_replay(play_history)
 		if print_screen:
 			current_state.print_gameboard()
 			print()
 		played = False
+
+		current_loop = 0
+
 		while not played:
+
+			current_loop = current_loop + 1
+			if current_loop > 100:
+				#print("Game was stuck; I cancelled it")
+				return (random.randint(1,2), current_state)
+
 			#import ipdb;ipdb.set_trace()
 			if player_1_turn:
 				player_selection = player1.get_selection(deepcopy(current_state))
@@ -38,22 +49,19 @@ def play_game(player1, player2, startstate, log, print_screen = True):
 				current_state = play_history[current_turn]
 			slot_to_remove = get_slot(player_selection, player_1_turn)
 			if slot_to_remove == -1:
-				cls()
-				print("This is not a valid turn!")
+#				cls()
+#				print("This is not a valid turn!")
 				if print_screen: current_state.print_gameboard()
 			else:
 				next_state = play(deepcopy(current_state), slot_to_remove, player_1_turn)
 				if next_state == None:
-					if player_1_turn: print("error illegal state")
+#					if player_1_turn: print("error illegal state")
 					#return None
 					continue
 
 				legal_state = deepcopy(next_state).is_state_legal(player_1_turn)
 
 				#print (legal_state)
-
-				if not legal_state and player_1_turn:
-					import ipdb;ipdb.set_trace()
 
 				any_legal_states = False
 				for i in range(0, 6):
@@ -73,5 +81,6 @@ def play_game(player1, player2, startstate, log, print_screen = True):
 					if print_screen: cls()
 				else:
 					if player_1_turn:
-						print("Error: illegal state")
-						print(jsonpickle.encode(current_state))
+						pass
+#						print("Error: illegal state")
+#						print(jsonpickle.encode(current_state))
