@@ -1,0 +1,119 @@
+\documentclass[french]{beamer}
+\usepackage[frenchb]{babel}
+\usepackage{etex}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage{pst-all}
+\usepackage{graphicx}
+\usepackage{fourier}
+\usetheme{Warsaw}
+\title{Le jeu de l'awalé}
+\date{Avril 2016}
+\author{SCHICHL Arthur, KAVAN Lukas, MONTINERI Jonathan \\ Lycée Francais de Vienne}
+
+\begin{document}
+
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\section{Le jeu}
+
+\begin{frame}
+\frametitle{Les règles}
+\begin{itemize}
+\onslide<2->\item Deux parties à six cases, $4$ pierres dans chaque au début.
+\onslide<3->\item Si la dernière pierre tombe sur une case de $1$ ou $2$ pierre(s), il capture les pierres.
+\onslide<4->\item Si le joueur ne peut plus jouer, l'adversaire obtient les pierres restantes.
+\onslide<5->\item Celui que a les plus de pierres a gagné.
+\end{itemize}
+\end{frame}
+
+
+\section{Stratégies}
+
+\begin{frame}
+\frametitle{Stratégies}
+\framesubtitle{...de début}
+\begin{itemize}
+\onslide<2->\item Éviter des tas de $2$ et de $1$.
+\onslide<3->\item Construire un grand tas.
+\onslide<4->\item Garder les pierres le plus longtemps possible.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Stratégies}
+\framesubtitle{...de milieu}
+\begin{itemize}
+\onslide<2->\item Les grands tas semblent être avantageux.
+\onslide<3->\item Préparer le terrain de jeu de l'adversaire.
+\onslide<4->\item Faire en sorte que l'adversaire n'ait aucun autre choix que de s'éliminer soi-même.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Stratégies}
+\framesubtitle{...de fin}
+\begin{itemize}
+\onslide<2->\item Prolonger la partie et gagner du temps.
+\onslide<3->\item Déplacer les pierres une par une.
+\onslide<4->\item Ne pas donner de pierres à l'adversaire.
+\end{itemize}
+\end{frame}
+
+
+\section{Notre programme}
+\subsection{Principe}
+\begin{frame}
+\frametitle{Explication}
+\begin{itemize}
+\onslide<2-5>\item Le programme cherche les meilleurs coups.
+\onslide<3-5>\item À chaque coup possible est associé une valeur.
+\onslide<4-5>\item Ensuite le coup avec la meilleure valeur est joué.
+\end{itemize}
+\onslide<5->\center{Comment cette valeur est-elle calculée?}
+\end{frame}
+
+\subsection{L'Intelligence}
+
+\begin{frame}
+\frametitle{Nos critères d'implémentation}
+\framesubtitle{L'avancement du jeu}
+\begin{itemize}
+\onslide<2->\item Déterminé en grande partie par le nombre de boules en jeu.
+\onslide<3->\item La présence d'un grand tas (supérieur à 12).
+\onslide<4->\item Permet la différenciation entre les types de stratégies.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Nos critères d'implémentation}
+\framesubtitle{L'état du terrain}
+\begin{itemize}
+\onslide<2->\item "Fonctions d'évaluation".
+\onslide<3->\item But: Déterminer la "qualité" d'un état du terrain.
+\onslide<4->\item Une fonction par critère (positif ou négatif).
+\end{itemize}
+\end{frame}
+
+\subsection{L'algorithme résumé}
+
+\begin{frame}
+\frametitle{Le fonctionnement}
+\onslide<2-> Pour chaque coup possible:  
+\onslide<3-> \\Essayer de jouer ce coup
+\onslide<4-> \\Évaluer son efficacité
+\onslide<5-> \\Ensuite, pour le meilleur des coups:
+\onslide<6-> \\Si ce coup est légal, jouer ce coup puis attendre le joueur.
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Joignez nous!}
+\center{\Huge{Connectez-vous à notre réseau WiFi et jouez à Awalé}}
+\end{frame}
+
+
+\end{document}
