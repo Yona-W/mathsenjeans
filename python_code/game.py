@@ -3,6 +3,7 @@ from functions import *
 from copy import deepcopy
 from sys import argv
 import jsonpickle
+import random
 
 def play_game(player1, player2, startstate, log, print_screen = True):
 	current_state = deepcopy(startstate)
@@ -11,8 +12,13 @@ def play_game(player1, player2, startstate, log, print_screen = True):
 	
 	play_history = []
 	current_turn = 0
+	current_loop = 0
 	
 	while not game_over:
+		current_loop = current_loop + 1
+		print(current_loop)
+		if current_loop > 100:
+			return (random.randint(1,2), current_state)
 		if log: log_replay(play_history)
 		if print_screen:
 			current_state.print_gameboard()

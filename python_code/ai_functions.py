@@ -26,7 +26,7 @@ def do_turn(self, game, eval_functions, ignore_legality = False):
 	best_score = max(scores_per_move)
 	if best_score == -10000000.0:
 		print("gangsta")
-		return self.do_turn(game, eval_functions, True)
+		return do_turn(game, eval_functions, True)
 	#print(best_score)
 	i = 0
 	for score in scores_per_move:
