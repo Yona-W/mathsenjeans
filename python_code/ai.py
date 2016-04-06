@@ -1,63 +1,119 @@
-﻿from gamestate import Game_State
-from functions import *
-import ai_functions as AI
-from copy import deepcopy
-from sys import argv
-import jsonpickle
+﻿from ai_functions import *
 
-log = input("Do you want to log the replay? It will overwrite the previous one! [N]/Y ").lower() == "y"
-is_different_start_state = input("Do you want to input a different start state? [N]/Y ").lower() == "y"
+class AI:
+	
+	def __init__(self, coefficients):
+		self.coefficients = coefficients
+	
+	def get_selection(self, game_state):
+		return str(do_turn(self, game_state, self.eval_functions))
+	
+	def eval_is_largest_stack_increased(self, old_state, new_state, kms):
+		coeff = self.coefficients
+		
+		previous_largest_stack = max(old_state.stones[:6])
+		new_largest_stack = max(new_state.stones[:6])
 
-game_over = False
-player_1_turn = True
+		if new_largest_stack > previous_largest_stack:
+			retval = (coeff[0] / arthur_g(kms)) * coeff[1]
+		else:
+			retval = 0.0
 
-if is_different_start_state:
-	text = "Game_State(0, 0, [" + input("Type it in: ") + "], -1)"
-	current_state = eval(text)
-else:
-	current_state = Game_State(0, 0, [4,4,4,4,4,4,4,4,4,4,4,4], -1)
+		return retval
 
-if len(argv) > 1:
-	replay = open(argv[1], "r").read()
-	game_states = jsonpickle.decode(replay)
-	turn = int(input("On what turn of the replay do you want to start? ")) - 1
+	def eval_amount_stones_lost(self, old_state, new_state, kms):
+		coeff = self.coefficients
+	 
+		my_stones_before = sum(old_state.stones[:6])
+		my_stones_after = sum(new_state.stones[:6])
 
-	try:
-		current_state = game_states[turn]
-		player_1_turn = current_state.is_player_1_turn
-	except e:
-		print("Error: the replay is only", len(game_states), "turns long!")
-		exit()
+		retval = (my_stones_after - my_stones_before) * (coeff[2] * arthur_h(kms))
 
-play_history = []
-current_turn = 0
+		return retval
 
-while not game_over:
-    if log: log_replay(play_history)
-    current_state.print_gameboard()
-    print()
-    played = False
-    while not played:
-        if player_1_turn:
-           player_selection = input("It's Player 1's turn! Pick a slot: ").lower()
-        else:
-           player_selection = AI.do_turn(current_state)
-        if player_selection == "undo":
-           num_turns = -int(input("By how many turns? "))
-           play_history = play_history[:num_turns]
-           current_state = current_turn + num_turns
-           current_turn += num_turns
-           current_state = play_history[current_turn]
-        slot_to_remove = get_slot(player_selection, player_1_turn)
-        if slot_to_remove == -1:
-            cls()
-            print("This is not a valid turn!")
-            current_state.print_gameboard()
-        else:
-            next_state = play(current_state, slot_to_remove, player_1_turn)
-            if next_state.is_state_legal():
-                played = True
-                play_history.append(deepcopy(current_state))
-                current_state = next_state
-                player_1_turn = not player_1_turn
-                cls()
+	def eval_amount_bad_stacks_created(self, old_state, new_state, kms):
+		coeff = self.coefficients
+		
+		old_opportunities = 0
+		new_opportunities = 0
+
+		for slot in old_state.stones[:6]:
+			if 0 < slot < 3:
+				old_opportunities += 1
+
+		for slot in new_state.stones[:6]:
+			if 0 < slot < 3:
+				new_opportunities += 1
+
+		retval = (new_opportunities - old_opportunities) * (coeff[3] * arthur_h(kms))
+
+		return retval
+
+
+	def eval_amount_bad_opportunities_created(self, old_state, new_state, kms):
+		coeff = self.coefficients
+		
+		old_opportunities = 0
+		new_opportunities = 0
+
+		for slot in range(0,6):
+			if check_if_slot_capturable_by_enemy(old_state.stones, slot):
+				old_opportunities += 1
+
+		for slot in range(0,6):
+			if check_if_slot_capturable_by_enemy(new_state.stones, slot):
+				new_opportunities += 1
+
+		retval = (new_opportunities - old_opportunities) * (coeff[4] * arthur_h(kms)) + coeff[5] * kms
+
+		return retval
+
+	def eval_is_enemy_forced_to_play_their_last_possible_move_and_thus_lose_the_game_in_a_sad_and_pathetic_way(self, old_state, new_state, kms):
+		enemy_slots = new_state.stones[6:]
+		enemy_filled_slots = len([val for val in enemy_slots if val != 0])
+
+		retval = 0.0
+
+		if (enemy_filled_slots == 1 and enemy_slots[0] != 0) or new_state.player_1_score >= 24:
+			retval = float("inf")
+
+		return retval
+	   
+
+	def eval_did_i_open_my_biggest_slot(self, old_state, new_state, kms): #that's what she said huehuehue
+		coeff = self.coefficients
+		
+		my_old_slots = old_state.stones[:6]
+		my_new_slots = new_state.stones[:6]
+
+		retval = 0.0
+
+		if max(my_new_slots) < max(my_old_slots):
+			retval = coeff[6] * arthur_j(kms) * arthur_k(my_new_slots)
+
+		return retval
+
+	def eval_is_enemy_forced_to_open_their_largest_stack(self, old_state, new_state, kms):
+		coeff = self.coefficients
+		
+		enemy_slots = new_state.stones[6:]
+		enemy_filled_slots = len([val for val in enemy_slots if val != 0])
+		
+		retval = 0.0
+
+		if enemy_filled_slots == 1:
+			retval = coeff[7] * arthur_j(kms) * arthur_k(enemy_slots)
+
+		return retval
+
+	def eval_stones_captured(self, old_state, new_state, kms):
+		coeff = self.coefficients
+		
+		score_difference = new_state.player_1_score - old_state.player_1_score
+		
+		retval = coeff[8] * score_difference * arthur_h(kms)
+
+		return retval
+
+
+	eval_functions = [eval_is_largest_stack_increased, eval_amount_stones_lost, eval_amount_bad_stacks_created, eval_amount_bad_opportunities_created, eval_is_enemy_forced_to_play_their_last_possible_move_and_thus_lose_the_game_in_a_sad_and_pathetic_way, eval_did_i_open_my_biggest_slot, eval_is_enemy_forced_to_open_their_largest_stack, eval_stones_captured] # holy shit
