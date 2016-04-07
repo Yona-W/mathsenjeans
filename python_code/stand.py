@@ -4,12 +4,16 @@ from copy import deepcopy
 from sys import argv
 import jsonpickle
 from human import Human
+from default_ai import Default_AI
 from random_player import Random
 from monte_carlo import Monte_Carlo
 import game
 
-log = input("Do you want to log the replay? It will overwrite the previous one! [N]/Y ").lower() == "y"
-is_different_start_state = input("Do you want to input a different start state? [N]/Y ").lower() == "y"
+#log = input("Do you want to log the replay? It will overwrite the previous one! [N]/Y ").lower() == "y"
+#is_different_start_state = input("Do you want to input a different start state? [N]/Y ").lower() == "y"
+
+log = False
+is_different_start_state = False
 
 if is_different_start_state:
 	text = "Game_State(0, 0, [" + input("Type it in: ") + "], -1)"
@@ -29,12 +33,12 @@ if len(argv) > 1:
 		print("Error: the replay is only", len(game_states), "turns long!")
 		exit()
 
-player_1 = Monte_Carlo(100)
-player_2 = Random()
+player_1 = Default_AI()
+player_2 = Human(False)
 
 winner = game.play_game(player_1, player_2, current_state, log)[0]
 
 if winner == 1:
-	print("Monte Carlo wins!")
+	print("AI wins!")
 else:
-	print("Player 2 wins!")
+	print("The human wins!")

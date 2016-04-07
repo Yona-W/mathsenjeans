@@ -7,7 +7,7 @@ from copy import deepcopy
 
 class Monte_Carlo:
 
-	threads = cpu_count() * 2
+	threads = cpu_count()
 
 	def __init__(self, games):
 		self.games = games

@@ -85,4 +85,19 @@ class Game_State():
         if not this.is_player_1_turn and sum(this.stones[6:12]) == 0:
             return 1
             
+        return 0 
+
+
+    def get_winning(this):
+
+        if this.player_1_score > 24:
+            return 1
+        if this.player_2_score > 24:
+            return 2
+            
+        if this.is_player_1_turn and sum(this.stones[:6]) == 0:
+            return 2
+        if not this.is_player_1_turn and sum(this.stones[6:12]) == 0:
+            return 1
+            
         return 0

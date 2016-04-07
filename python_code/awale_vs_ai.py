@@ -32,4 +32,4 @@ if len(argv) > 1:
 player_1 = Default_AI()
 player_2 = Random()
 
-print(game.play_game(player_1, player_2, current_state, log))
+print(game.play_game(player_1, player_2, current_state, log, False))

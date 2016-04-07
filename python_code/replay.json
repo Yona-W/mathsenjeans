@@ -1,6 +1,32 @@
 [
     {
-        "py/object": "gamestate.Game_State",
+        "player_2_score": 0,
+        "slot_moved": -1,
+        "player_1_score": 0,
+        "ignore_next_legal_check": false,
+        "is_player_1_turn": true,
+        "stones": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+        ],
+        "py/object": "gamestate.Game_State"
+    },
+    {
+        "player_2_score": 0,
+        "slot_moved": 0,
+        "player_1_score": 0,
+        "ignore_next_legal_check": false,
+        "is_player_1_turn": false,
         "stones": [
             0,
             5,
@@ -15,156 +41,116 @@
             4,
             4
         ],
-        "is_player_1_turn": false,
-        "player_2_score": 0,
-        "slot_moved": 0,
-        "player_1_score": 0
+        "py/object": "gamestate.Game_State"
     },
     {
-        "py/object": "gamestate.Game_State",
-        "stones": [
-            1,
-            6,
-            6,
-            5,
-            5,
-            4,
-            4,
-            4,
-            4,
-            4,
-            0,
-            5
-        ],
-        "is_player_1_turn": true,
-        "player_2_score": 0,
-        "slot_moved": 10,
-        "player_1_score": 0
-    },
-    {
-        "py/object": "gamestate.Game_State",
-        "stones": [
-            0,
-            7,
-            6,
-            5,
-            5,
-            4,
-            4,
-            4,
-            4,
-            4,
-            0,
-            5
-        ],
-        "is_player_1_turn": false,
-        "player_2_score": 0,
-        "slot_moved": 0,
-        "player_1_score": 0
-    },
-    {
-        "py/object": "gamestate.Game_State",
-        "stones": [
-            1,
-            7,
-            6,
-            5,
-            5,
-            4,
-            4,
-            4,
-            0,
-            5,
-            1,
-            6
-        ],
-        "is_player_1_turn": true,
-        "player_2_score": 0,
-        "slot_moved": 8,
-        "player_1_score": 0
-    },
-    {
-        "py/object": "gamestate.Game_State",
-        "stones": [
-            0,
-            8,
-            6,
-            5,
-            5,
-            4,
-            4,
-            4,
-            0,
-            5,
-            1,
-            6
-        ],
-        "is_player_1_turn": false,
-        "player_2_score": 0,
-        "slot_moved": 0,
-        "player_1_score": 0
-    },
-    {
-        "py/object": "gamestate.Game_State",
-        "stones": [
-            1,
-            9,
-            7,
-            5,
-            5,
-            4,
-            4,
-            4,
-            0,
-            0,
-            2,
-            7
-        ],
-        "is_player_1_turn": true,
-        "player_2_score": 0,
-        "slot_moved": 9,
-        "player_1_score": 0
-    },
-    {
-        "py/object": "gamestate.Game_State",
-        "stones": [
-            0,
-            10,
-            7,
-            5,
-            5,
-            4,
-            4,
-            4,
-            0,
-            0,
-            2,
-            7
-        ],
-        "is_player_1_turn": false,
-        "player_2_score": 0,
-        "slot_moved": 0,
-        "player_1_score": 0
-    },
-    {
-        "py/object": "gamestate.Game_State",
-        "stones": [
-            0,
-            10,
-            7,
-            5,
-            5,
-            4,
-            4,
-            0,
-            1,
-            1,
-            3,
-            8
-        ],
-        "is_player_1_turn": true,
         "player_2_score": 0,
         "slot_moved": 7,
-        "player_1_score": 0
+        "player_1_score": 0,
+        "ignore_next_legal_check": false,
+        "is_player_1_turn": true,
+        "stones": [
+            0,
+            5,
+            5,
+            5,
+            5,
+            4,
+            4,
+            0,
+            5,
+            5,
+            5,
+            5
+        ],
+        "py/object": "gamestate.Game_State"
+    },
+    {
+        "player_2_score": 0,
+        "slot_moved": 1,
+        "player_1_score": 0,
+        "ignore_next_legal_check": false,
+        "is_player_1_turn": false,
+        "stones": [
+            0,
+            0,
+            6,
+            6,
+            6,
+            5,
+            5,
+            0,
+            5,
+            5,
+            5,
+            5
+        ],
+        "py/object": "gamestate.Game_State"
+    },
+    {
+        "player_2_score": 0,
+        "slot_moved": 8,
+        "player_1_score": 0,
+        "ignore_next_legal_check": false,
+        "is_player_1_turn": true,
+        "stones": [
+            1,
+            1,
+            6,
+            6,
+            6,
+            5,
+            5,
+            0,
+            0,
+            6,
+            6,
+            6
+        ],
+        "py/object": "gamestate.Game_State"
+    },
+    {
+        "player_2_score": 0,
+        "slot_moved": 0,
+        "player_1_score": 0,
+        "ignore_next_legal_check": false,
+        "is_player_1_turn": false,
+        "stones": [
+            0,
+            2,
+            6,
+            6,
+            6,
+            5,
+            5,
+            0,
+            0,
+            6,
+            6,
+            6
+        ],
+        "py/object": "gamestate.Game_State"
+    },
+    {
+        "player_2_score": 0,
+        "slot_moved": 11,
+        "player_1_score": 0,
+        "ignore_next_legal_check": false,
+        "is_player_1_turn": true,
+        "stones": [
+            1,
+            3,
+            7,
+            7,
+            7,
+            6,
+            5,
+            0,
+            0,
+            6,
+            6,
+            0
+        ],
+        "py/object": "gamestate.Game_State"
     }
 ]

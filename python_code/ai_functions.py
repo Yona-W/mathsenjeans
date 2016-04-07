@@ -1,28 +1,40 @@
 ﻿import functions
+import random
 from copy import deepcopy
 
-def do_turn(self, game, eval_functions):
+def do_turn(self, game, eval_functions, ignore_legality = False):
 	game_state = deepcopy(game)
 	#import ipdb;ipdb.set_trace()
 	scores_per_move = [0, 0, 0, 0, 0, 0]
 	for turn in range(0, 6):
 		new_state = functions.play(game_state, turn, True)
-		if game.stones[turn] == 0:
+		#print(new_state)
+		if not new_state: 
+			#print("skipping impossible turn")
+			scores_per_move[turn] = -10000000.0
+			continue
+		#print("playing")
+
+		if not deepcopy(new_state).is_state_legal(True) or ignore_legality:
 			#import ipdb;ipdb.set_trace()
 			scores_per_move[turn] = -10000000.0
-			#print("skipping impossible turn")
+			continue
 		else:
 			for function in eval_functions:
 				#print("Calling function",function)
 				scores_per_move[turn] += function(self, game_state, new_state, arthur_kms(new_state.stones))
 	#import ipdb;ipdb.set_trace()
 	best_score = max(scores_per_move)
+	if best_score == -10000000.0:
+		return random.randint(1, 7)
 	#print(best_score)
 	i = 0
 	for score in scores_per_move:
 		i += 1
 		if score == best_score:
 			#print(i)
+			#print(game.stones)
+			#print(scores_per_move, best_score, i)
 			return i
 
 def check_if_slot_capturable_by_enemy(board, slot):
@@ -80,10 +92,14 @@ def arthur_j(x):
 
 def arthur_k(board): #Because he's too cool for consistency in variables 8-)
     #import ipdb;ipdb.set_trace()
-    average = float(sum(board)) / float(len(board))
-    maximum = max(board)
+	average = float(sum(board)) / float(len(board))
+	maximum = max(board)
+	try:
+		return (maximum / average) ** 2
+	except Exception as e:
+		#print(board)
+		return 0
 
-    return (maximum / average) ** 2
 
 def arthur_m(x): #m stands for magic, i think
     if 0 <= x <= 40:
@@ -103,4 +119,4 @@ def arthur_n(x):
         return 0.75
 
 def arthur_kms(board):
-    return arthur_n(sum(board)) * arthur_m(max(board))
+	return arthur_n(sum(board)) * arthur_m(max(board))
