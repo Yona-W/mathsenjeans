@@ -11,8 +11,6 @@ def play(player_1, player_2, board_state, games, threads, all_games, games_won_p
 	p = Pool(threads)
 	results = p.starmap(game.play_game, arguments)
 
-	print("Done")
-
 	for result in results:
 		if result[0] == 1:
 			games_won_player1.append(result[1])

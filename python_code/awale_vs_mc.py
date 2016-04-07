@@ -29,7 +29,7 @@ if len(argv) > 1:
 		print("Error: the replay is only", len(game_states), "turns long!")
 		exit()
 
-player_1 = Monte_Carlo(100)
+player_1 = Monte_Carlo(300)
 player_2 = Random()
 
 winner = game.play_game(player_1, player_2, current_state, log)[0]

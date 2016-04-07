@@ -4,6 +4,7 @@ from copy import deepcopy
 from sys import argv
 import jsonpickle
 import random
+import time
 
 def play_game(player1, player2, startstate, log, print_screen = True):
 	current_state = deepcopy(startstate)
@@ -24,6 +25,7 @@ def play_game(player1, player2, startstate, log, print_screen = True):
 		if log: log_replay(play_history)
 		if print_screen:
 			current_state.print_gameboard()
+			time.sleep(1)
 			print()
 		played = False
 
