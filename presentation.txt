@@ -1,0 +1,26 @@
+I - Notre sujet
+
+- Awale, même jeu mais règle différente. Un joueur a le droit jouer d'une manière qui prive l'adversaire de pierres, le rendant incapable de jouer, ce qui crée de nouvelles possibilités stratégiques.
+- Nous avons tenté d'écrire un programme capable de jouer à ce jeu en suivant les stratégies que nous avons élaboré
+- Pour cela, algorithme MinMax: Nous évaluons numériquement la qualité de chaque coup à partir de certains critères, puis nous jouons le coup avec la meilleure qualité.
+- Cependant, problème: la valeur des coups change constamment selon l'avancement du jeu. Il est donc nécessaire de trouver une représentation mathémathique de l'avancement du jeu.
+
+<arthur>
+
+- Ces fonctions d'évaluation sont ensuite utilisées dans cet algorithme. (describe from presentation)
+
+Ce programme est capable de gagner 70% de ses parties contre un adversaire qui joue aléatoirement. Statistique élaborée sur environ 10000 parties automatisées. Mais ce n'est pas suffisant: Comment pourrions-nous l'améliorer?
+
+II - Monte Carlo
+
+Prévoire plusieurs tours en avance serait une possibilité. Pour cela; nous avons opté pour une approche de Monte Carlo. Qu'est-ce?
+
+- Manière d'évaluer le meiileur coup, sans que le programme ait besoin de connaitre les regles.
+- à chaque tour, pour chaque coup, simuler un grand nombre de jeux aléatoires. (1000, par exemple)
+- Le coup avec la plus forte fréquence de victoires est ensuite joué.
+
+Ceci permet de prévoir les coups plusieurs tours en avance. Si un coup mène à une situation très avantageuse, il aura une plus forte fréquence de victoires, donc il sera joué.
+
+Cependant, gros problème: puissance de calcul. Pas accès à de gros serveurs, donc il serait trop long de jouer quelques milliers de jeu; de sorte que la statistique soit précise. Nous ne simulons donc pas des parties 100% aléatoires, mais nous faisons jouer notre IA contre un adversaire aléatoire. Nous pouvons ainsi diminuer le nombre de parties à jouer, mais il est toujours nécessaire de jouer beaucoup de parties.
+
+La force du programme dépend très directement du nombre de parties simulées par tour.
