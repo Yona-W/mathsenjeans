@@ -130,7 +130,7 @@
 \frametitle{Explication de l'algorithme}
 
 \onslide<2-> Pour chaque coup possible:
-\onslide<3-> \\Essayer de jouer ce coup
+\onslide<3-> \\Simuler ce coup
 \onslide<4-> \\Simuler un grand nombre de parties aléatoires á partir de ce coup
 \onslide<5-> \\Enregistrer la fréquence de parties gagnées selon le coup joué
 \onslide<6-> \\Jouer le coup avec la plus forte probabilité de gagner
@@ -141,8 +141,15 @@
 \begin{frame}
 \frametitle{Le problème de la puissance de calcul}
 \onslide<1-> Temps de calcul par tour très élevé
+\onslide<2-> Seule possibilité d'accélération: plus de processeurs?
 
-\onslide<2-> Seule possibilité d'accélération: plus de processeurs
+\end{frame}
+
+\subsection{Monte Carlo à parties non aléatoires}
+\begin{frame}
+\frametitle{Notre IA entre en jeu!}
+\onslide<1-> Éliminer un facteur aléatoire
+\onslide<2-> Réduire le nombre de parties nécessaires
 
 \end{frame}
 
