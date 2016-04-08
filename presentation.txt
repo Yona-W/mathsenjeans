@@ -3,7 +3,8 @@ I - Notre sujet
 - Awale, même jeu mais règle différente. Un joueur a le droit jouer d'une manière qui prive l'adversaire de pierres, le rendant incapable de jouer, ce qui crée de nouvelles possibilités stratégiques.
 - Nous avons tenté d'écrire un programme capable de jouer à ce jeu en suivant les stratégies que nous avons élaboré
 - Pour cela, algorithme MinMax: Nous évaluons numériquement la qualité de chaque coup à partir de certains critères, puis nous jouons le coup avec la meilleure qualité.
-- Cependant, problème: la valeur des coups change constamment selon l'avancement du jeu. Il est donc nécessaire de trouver une représentation mathémathique de l'avancement du jeu.
+- Question: comment calculons-nous cette valeur? Deux éléments-clé: Avancement du jeu et fonctions d'évaluation.
+- En effet, problème lié à la différence entre les stratégies de début, milieu et fin de jeu. La valeur des coups doit donc constamment varier selon l'avancement du jeu. Il est donc nécessaire de trouver une représentation mathémathique de l'avancement du jeu.
 
 <arthur>
 
