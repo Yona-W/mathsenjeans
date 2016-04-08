@@ -6,4 +6,4 @@ class Human:
 		if self.is_player_1:
 			return input("It's Player 1's turn! Pick a slot: ").lower()
 		else:
-			return input("It's Player 2's turn! Pick a slot: ").lower()
+			return input("C'est à toi!").lower()

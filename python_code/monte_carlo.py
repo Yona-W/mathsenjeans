@@ -1,6 +1,8 @@
 from default_ai import Default_AI
+from random_player import Random
 from genetic_algorithm import test_individual as simulate_games
 import functions
+import time
 
 from multiprocessing import cpu_count
 from copy import deepcopy
@@ -13,6 +15,7 @@ class Monte_Carlo:
 		self.games = games
 
 		self.ai = Default_AI()
+		#self.ai = Random()
 
 
 	def get_selection(self, game_state):
@@ -25,17 +28,18 @@ class Monte_Carlo:
 			if game_state.stones[turn] == 0:
 				#import ipdb;ipdb.set_trace()
 				percent_per_move[turn] = -1.0
-				print("Skipping empty slot", turn + 1)
+				print("Je saute la case", turn + 1, "qui est vide")
 			else:
-				print("Evaluating probability of winning by playing in slot", turn + 1)
+				print("Je calcule la probabilité de gagner si je joue en", turn + 1)
 				scores = simulate_games(self.ai, self.threads, self.games, deepcopy(new_state).stones)
 				percent_per_move[turn] = scores[1] / scores[0]
-				print("Probability of winning is", int(percent_per_move[turn] * 100), "%")
+				print("J'ai une probabilité de", int(percent_per_move[turn] * 100), "% de gagner")
 		#import ipdb;ipdb.set_trace()
 		best_score = max(percent_per_move)
 		i = 0
 		for score in percent_per_move:
 			i += 1
 			if score == best_score:
-				#print(i)
+				print("Je joue en",i)
+				time.sleep(1)
 				return str(i)
