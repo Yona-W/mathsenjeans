@@ -1,12 +1,29 @@
+<Lukas>
+
 I - Notre sujet
 
 - Awale, même jeu mais règle différente. Un joueur a le droit jouer d'une manière qui prive l'adversaire de pierres, le rendant incapable de jouer, ce qui crée de nouvelles possibilités stratégiques.
 - Nous avons tenté d'écrire un programme capable de jouer à ce jeu en suivant les stratégies que nous avons élaboré
 - Pour cela, algorithme MinMax: Nous évaluons numériquement la qualité de chaque coup à partir de certains critères, puis nous jouons le coup avec la meilleure qualité.
 - Question: comment calculons-nous cette valeur? Deux éléments-clé: Avancement du jeu et fonctions d'évaluation.
-- En effet, problème lié à la différence entre les stratégies de début, milieu et fin de jeu. La valeur des coups doit donc constamment varier selon l'avancement du jeu. Il est donc nécessaire de trouver une représentation mathémathique de l'avancement du jeu.
 
-<arthur>
+</Lukas>
+
+<Arthur>
+
+- En effet, problème lié à la différence entre les stratégies de début, milieu et fin de jeu. La valeur des coups doit donc constamment varier selon l'avancement du jeu. Il est donc nécessaire de trouver une représentation mathémathique de l'avancement du jeu, de sorte que le programme puisse en tenir comte dans son évaluation.
+
+- Pour cela, nous avons défini une fonction, la fonction KMS. Cette fonction tient à la fois compte du nombre de pierres encore présentes et de la taille du plus grand tas. Il ne serait en effet pas suffisant de considérer uniquement le nombre de pierres car cela exclut les situations oú un joueur, en ouvrant le plus grand tas, peut entièrement retourner le jeu.
+
+- Mathémathiquement, dépend de 2 fonctions. (expliquer les fonctions mathémathiquement SANS ENDORMIR TOUTE LA SALLE)
+
+- Ce coefficient KMS ainsi calculé est ensuite utilisé dans des fonctions d'évaluation. Ces fonctions utilisent le coefficient KMS pour attribuer à un état du jeu une valeur selon un critère, tel que le nombre de cases contenant 1 ou 2 pierres ou la taille du plus grand tas.
+
+- Nous avons une fonction d'évaluation par critère. (liste critères)
+
+</Arthur>
+
+<Lukas>
 
 - Ces fonctions d'évaluation sont ensuite utilisées dans cet algorithme. (describe from presentation)
 
@@ -15,6 +32,9 @@ Ce programme est capable de gagner 70% de ses parties contre un adversaire qui j
 II - Monte Carlo
 
 Prévoire plusieurs tours en avance serait une possibilité. Pour cela; nous avons opté pour une approche de Monte Carlo. Qu'est-ce?
+
+</Lukas>
+<Jonathan>
 
 - Manière d'évaluer le meiileur coup, sans que le programme ait besoin de connaitre les regles.
 - à chaque tour, pour chaque coup, simuler un grand nombre de jeux aléatoires. (1000, par exemple)
@@ -25,3 +45,5 @@ Ceci permet de prévoir les coups plusieurs tours en avance. Si un coup mène à
 Cependant, gros problème: puissance de calcul. Pas accès à de gros serveurs, donc il serait trop long de jouer quelques milliers de jeu; de sorte que la statistique soit précise. Nous ne simulons donc pas des parties 100% aléatoires, mais nous faisons jouer notre IA contre un adversaire aléatoire. Nous pouvons ainsi diminuer le nombre de parties à jouer, mais il est toujours nécessaire de jouer beaucoup de parties.
 
 La force du programme dépend très directement du nombre de parties simulées par tour.
+
+</Jonathan>
